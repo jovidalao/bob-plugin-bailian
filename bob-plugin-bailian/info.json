@@ -1,6 +1,6 @@
 {
     "identifier": "com.jovi.bailian.translate",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "category": "translate",
     "name": "阿里云百炼翻译",
     "summary": "使用阿里云百炼 DashScope 大模型进行自定义翻译。",
@@ -29,6 +29,17 @@
                 "type": "visible",
                 "placeholderText": "deepseek-v4-pro"
             }
+        },
+        {
+            "identifier": "temperature",
+            "type": "text",
+            "title": "温度",
+            "defaultValue": "0.2",
+            "textConfig": {
+                "type": "visible",
+                "placeholderText": "0.2"
+            },
+            "desc": "控制输出随机性，范围 0 到 2。数值越低越稳定，默认 0.2。"
         },
         {
             "identifier": "endpoint",

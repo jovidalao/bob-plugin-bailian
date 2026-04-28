@@ -1,5 +1,6 @@
 var DEFAULT_ENDPOINT = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation";
 var DEFAULT_MODEL = "deepseek-v4-pro";
+var DEFAULT_TEMPERATURE = 0.2;
 var DEFAULT_SYSTEM_PROMPT = "You are a translation engine. Translate accurately and output only the translation. Do not explain, summarize, or add information that is not in the source text.";
 var DEFAULT_USER_PROMPT = "Translate from $sourceLang to $targetLang:\n\n$text";
 
@@ -75,10 +76,18 @@ function translate(query, completion) {
         return;
     }
 
+    var temperature = parseTemperature();
+    if (temperature.error) {
+        complete({
+            error: temperature.error
+        });
+        return;
+    }
+
     var promptValues = createPromptValues(query);
     var systemPrompt = buildPrompt(getOptionValue("systemPrompt", DEFAULT_SYSTEM_PROMPT), promptValues, false);
     var userPrompt = buildPrompt(getOptionValue("prompt", DEFAULT_USER_PROMPT), promptValues, true);
-    var body = createRequestBody(systemPrompt, userPrompt, isOptionEnabled($option.enableThinking, false));
+    var body = createRequestBody(systemPrompt, userPrompt, isOptionEnabled($option.enableThinking, false), temperature.value);
     var useStream = isOptionEnabled($option.streamOutput, true) && $http && typeof $http.streamRequest === "function";
 
     if (useStream) {
@@ -99,7 +108,16 @@ function pluginValidate(completion) {
         return;
     }
 
-    var body = createRequestBody("", "请只回复 OK。", false);
+    var temperature = parseTemperature();
+    if (temperature.error) {
+        completion({
+            result: false,
+            error: temperature.error
+        });
+        return;
+    }
+
+    var body = createRequestBody("", "请只回复 OK。", false, temperature.value);
     body.parameters.incremental_output = false;
 
     $http.request({
@@ -242,7 +260,7 @@ function requestStreamTranslation(query, complete, apiKey, body) {
     });
 }
 
-function createRequestBody(systemPrompt, userPrompt, enableThinking) {
+function createRequestBody(systemPrompt, userPrompt, enableThinking, temperature) {
     var messages = [];
 
     if (trimString(systemPrompt)) {
@@ -265,7 +283,8 @@ function createRequestBody(systemPrompt, userPrompt, enableThinking) {
         parameters: {
             enable_thinking: enableThinking,
             incremental_output: true,
-            result_format: "message"
+            result_format: "message",
+            temperature: temperature
         }
     };
 }
@@ -568,6 +587,27 @@ function getEndpoint() {
 function getOptionValue(identifier, fallback) {
     var value = trimString($option[identifier]);
     return value || fallback;
+}
+
+function parseTemperature() {
+    var rawValue = trimString($option.temperature);
+
+    if (!rawValue) {
+        return {
+            value: DEFAULT_TEMPERATURE
+        };
+    }
+
+    var value = Number(rawValue);
+    if (isNaN(value) || value < 0 || value > 2) {
+        return {
+            error: createServiceError("param", "温度需要是 0 到 2 之间的数字。", "当前填写值：" + rawValue)
+        };
+    }
+
+    return {
+        value: value
+    };
 }
 
 function isOptionEnabled(value, fallback) {

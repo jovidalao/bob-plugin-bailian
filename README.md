@@ -6,6 +6,7 @@
 
 - 支持 DashScope `text-generation/generation` 接口。
 - 支持自定义模型，默认 `deepseek-v4-pro`。
+- 支持温度设置，默认 `0.2`。
 - 支持 System Prompt 和 User Prompt。
 - 支持 `$text`、`$sourceLang`、`$targetLang`、`$sourceCode`、`$targetCode` 变量。
 - 支持 Bob 1.8.0+ 的流式输出。
@@ -18,6 +19,7 @@
 
 - `DashScope API Key`：阿里云百炼 / DashScope API Key。
 - `模型`：例如 `deepseek-v4-pro`。
+- `温度`：控制输出随机性，范围 `0` 到 `2`，默认 `0.2`。
 - `接口地址`：默认 `https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation`。
 - `System Prompt`：系统指令。
 - `User Prompt`：用户指令。
@@ -63,10 +65,10 @@ zip -r ../aliyun-bailian-translate.bobplugin .
 
 ## 发布信息
 
-- 当前版本：`0.2.0`
+- 当前版本：`0.2.1`
 - 最低 Bob 版本：`1.8.0`
 - 插件包：`aliyun-bailian-translate.bobplugin`
-- SHA256：`e719f55aaaa9ec2f5e2045d911983c532b81ba4dc282449b569964bbd8d9a25e`
+- SHA256：`92e9e30c72b5c010814bf7a84e889ef885600012670512f1ed52c7e81f5d391c`
 
 ## 参考
 
