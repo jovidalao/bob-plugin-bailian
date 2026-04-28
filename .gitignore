@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+.env
+.env.*
+*.log
+
+# Local reference project used during development; not part of this plugin.
+bob-plugin-openai-translator-main/

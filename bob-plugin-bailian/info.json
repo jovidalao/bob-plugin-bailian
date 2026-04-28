@@ -1,0 +1,115 @@
+{
+    "identifier": "com.jovi.bailian.translate",
+    "version": "0.2.0",
+    "category": "translate",
+    "name": "阿里云百炼翻译",
+    "summary": "使用阿里云百炼 DashScope 大模型进行自定义翻译。",
+    "icon": "001",
+    "author": "jovi",
+    "homepage": "https://github.com/jovidalao/bob-plugin-bailian",
+    "appcast": "https://raw.githubusercontent.com/jovidalao/bob-plugin-bailian/main/appcast.json",
+    "minBobVersion": "1.8.0",
+    "options": [
+        {
+            "identifier": "apiKey",
+            "type": "text",
+            "title": "DashScope API Key",
+            "textConfig": {
+                "type": "secure",
+                "placeholderText": "请输入 DASHSCOPE_API_KEY"
+            },
+            "desc": "阿里云百炼 / DashScope 的 API Key。"
+        },
+        {
+            "identifier": "model",
+            "type": "text",
+            "title": "模型",
+            "defaultValue": "deepseek-v4-pro",
+            "textConfig": {
+                "type": "visible",
+                "placeholderText": "deepseek-v4-pro"
+            }
+        },
+        {
+            "identifier": "endpoint",
+            "type": "text",
+            "title": "接口地址",
+            "defaultValue": "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation",
+            "textConfig": {
+                "type": "visible",
+                "height": 42,
+                "placeholderText": "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation"
+            }
+        },
+        {
+            "identifier": "systemPrompt",
+            "type": "text",
+            "title": "System Prompt",
+            "defaultValue": "You are a translation engine. Translate accurately and output only the translation. Do not explain, summarize, or add information that is not in the source text.",
+            "textConfig": {
+                "type": "visible",
+                "height": 100,
+                "keyWords": [
+                    "$text",
+                    "$sourceLang",
+                    "$targetLang",
+                    "$sourceCode",
+                    "$targetCode"
+                ],
+                "placeholderText": "You are a translation engine."
+            },
+            "desc": "系统指令。可使用 $text、$sourceLang、$targetLang、$sourceCode、$targetCode。"
+        },
+        {
+            "identifier": "prompt",
+            "type": "text",
+            "title": "User Prompt",
+            "defaultValue": "Translate from $sourceLang to $targetLang:\n\n$text",
+            "textConfig": {
+                "type": "visible",
+                "height": 140,
+                "keyWords": [
+                    "$text",
+                    "$sourceLang",
+                    "$targetLang",
+                    "$sourceCode",
+                    "$targetCode"
+                ],
+                "placeholderText": "Translate from $sourceLang to $targetLang:\n\n$text"
+            },
+            "desc": "用户指令。可使用 $text、$sourceLang、$targetLang、$sourceCode、$targetCode，也兼容全角 ＄ 和 {{text}} 写法。"
+        },
+        {
+            "identifier": "enableThinking",
+            "type": "menu",
+            "title": "启用模型思考",
+            "defaultValue": "false",
+            "menuValues": [
+                {
+                    "title": "开启",
+                    "value": "true"
+                },
+                {
+                    "title": "关闭",
+                    "value": "false"
+                }
+            ]
+        },
+        {
+            "identifier": "streamOutput",
+            "type": "menu",
+            "title": "流式输出",
+            "defaultValue": "true",
+            "menuValues": [
+                {
+                    "title": "开启",
+                    "value": "true"
+                },
+                {
+                    "title": "关闭",
+                    "value": "false"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "identifier": "com.jovi.bailian.translate",
+    "versions": [
+        {
+            "version": "0.2.0",
+            "desc": "修复流式输出回调结构，新增 System Prompt，最低 Bob 版本调整为 1.8.0。",
+            "sha256": "e719f55aaaa9ec2f5e2045d911983c532b81ba4dc282449b569964bbd8d9a25e",
+            "url": "https://raw.githubusercontent.com/jovidalao/bob-plugin-bailian/main/aliyun-bailian-translate.bobplugin",
+            "minBobVersion": "1.8.0",
+            "timestamp": 1777337580000
+        }
+    ]
+}
