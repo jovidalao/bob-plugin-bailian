@@ -1,48 +1,48 @@
 # Bob Plugin Bailian
 
-阿里云百炼 DashScope 翻译插件，用百炼平台的大模型为 Bob 提供自定义翻译能力。
+Alibaba Cloud Bailian DashScope translation plugin, providing custom translation capabilities for Bob using large models from the Bailian platform.
 
-## 功能
+## Features
 
-- 支持 DashScope `text-generation/generation` 接口。
-- 支持自定义模型，默认 `deepseek-v4-pro`。
-- 支持温度设置，默认 `0.2`。
-- 支持 System Prompt 和 User Prompt。
-- 支持 `$text`、`$sourceLang`、`$targetLang`、`$sourceCode`、`$targetCode` 变量。
-- 支持 Bob 1.8.0+ 的流式输出。
+- Supports DashScope `text-generation/generation` interface.
+- Supports custom models, default is `deepseek-v4-pro`.
+- Supports temperature setting, default is `0.2`.
+- Supports System Prompt and User Prompt.
+- Supports `$text`, `$sourceLang`, `$targetLang`, `$sourceCode`, `$targetCode` variables.
+- Supports streaming output for Bob 1.8.0+.
 
-## 安装
+## Installation
 
-下载或导入仓库根目录的 `aliyun-bailian-translate.bobplugin`。
+Download or import `aliyun-bailian-translate.bobplugin` from the repository root.
 
-安装后在 Bob 插件设置里填写：
+After installation, fill in the following in Bob's plugin settings:
 
-- `DashScope API Key`：阿里云百炼 / DashScope API Key。
-- `模型`：例如 `deepseek-v4-pro`。
-- `温度`：控制输出随机性，范围 `0` 到 `2`，默认 `0.2`。
-- `接口地址`：默认 `https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation`。
-- `System Prompt`：系统指令。
-- `User Prompt`：用户指令。
-- `启用模型思考`：默认关闭。打开后模型可能先生成推理内容，译文流式展示会等到接口开始返回 `content`。
-- `流式输出`：默认开启。
+- `DashScope API Key`: Alibaba Cloud Bailian / DashScope API Key.
+- `Model`: e.g., `deepseek-v4-pro`.
+- `Temperature`: Controls output randomness, range `0` to `2`, default is `0.2`.
+- `API Endpoint`: Default is `https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation`.
+- `System Prompt`: System instructions.
+- `User Prompt`: User instructions.
+- `Enable Model Reasoning`: Disabled by default. When enabled, the model may generate reasoning content first; streaming display of the translation will wait until the interface starts returning `content`.
+- `Streaming Output`: Enabled by default.
 
-插件设置中不提供额外“支持语言”配置。源语言和目标语言直接使用 Bob 翻译窗口的选择结果。
+Extra "Supported Languages" configuration is not provided in the plugin settings. The source and target languages are directly taken from the selection in the Bob translation window.
 
-## Prompt 变量
+## Prompt Variables
 
-System Prompt 和 User Prompt 都支持以下变量：
+Both System Prompt and User Prompt support the following variables:
 
-- `$text`：翻译窗口中的原文。
-- `$sourceLang`：原文语言名称，例如 `简体中文`。
-- `$targetLang`：目标语言名称，例如 `English`。
-- `$sourceCode`：Bob 原文语言代码，例如 `zh-Hans`。
-- `$targetCode`：Bob 目标语言代码，例如 `en`。
+- `$text`: The original text in the translation window.
+- `$sourceLang`: Source language name, e.g., `Simplified Chinese`.
+- `$targetLang`: Target language name, e.g., `English`.
+- `$sourceCode`: Bob source language code, e.g., `zh-Hans`.
+- `$targetCode`: Bob target language code, e.g., `en`.
 
-同时兼容全角 `＄text` 和 `{{text}}` 写法。
+Also compatible with full-width `＄text` and `{{text}}` syntax.
 
-## 流式输出说明
+## Streaming Output Description
 
-插件使用 `$http.streamRequest` 发起 SSE 请求，并按 Bob 1.8.0+ 的流式回调方式调用：
+The plugin uses `$http.streamRequest` to initiate SSE requests and calls back in the streaming manner of Bob 1.8.0+:
 
 ```js
 query.onStream({
@@ -54,24 +54,24 @@ query.onStream({
 });
 ```
 
-这与 `bob-plugin-openai-translator` 的成熟实现保持一致。
+This is consistent with the mature implementation of `bob-plugin-openai-translator`.
 
-## 打包
+## Packaging
 
 ```sh
 cd bob-plugin-bailian
 zip -r ../aliyun-bailian-translate.bobplugin .
 ```
 
-## 发布信息
+## Release Information
 
-- 当前版本：`0.2.1`
-- 最低 Bob 版本：`1.8.0`
-- 插件包：`aliyun-bailian-translate.bobplugin`
-- SHA256：`92e9e30c72b5c010814bf7a84e889ef885600012670512f1ed52c7e81f5d391c`
+- Current Version: `0.2.1`
+- Minimum Bob Version: `1.8.0`
+- Plugin Package: `aliyun-bailian-translate.bobplugin`
+- SHA256: `92e9e30c72b5c010814bf7a84e889ef885600012670512f1ed52c7e81f5d391c`
 
-## 参考
+## References
 
-- Bob 文本翻译插件文档：https://bobtranslate.com/plugin/quickstart/translate.html
-- Bob 插件发布文档：https://bobtranslate.com/plugin/quickstart/publish.html
-- 阿里云百炼 DashScope：https://dashscope.aliyuncs.com/
+- Bob Text Translation Plugin Documentation: https://bobtranslate.com/plugin/quickstart/translate.html
+- Bob Plugin Publishing Documentation: https://bobtranslate.com/plugin/quickstart/publish.html
+- Alibaba Cloud Bailian DashScope: https://dashscope.aliyuncs.com/
